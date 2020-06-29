@@ -23,8 +23,14 @@ const (
 	ASTERISK = "*"
 	SLASH    = "/"
 
-	LT = "<"
-	GT = ">"
+	LT  = "<"
+	GT  = ">"
+	EQ  = "=="
+	NE  = "!="
+	LTE = "<="
+	GTE = ">="
+	AND = "&&"
+	OR  = "||"
 
 	// Delimiters
 	COMMA     = ","

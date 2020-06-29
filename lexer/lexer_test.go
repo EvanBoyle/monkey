@@ -20,12 +20,12 @@ func TestNextToken(t *testing.T) {
 	!-/*5;
 	5 < 10 > 5;
 	let x = true;
-	let y = !x;
-	if (x) {
-		return true;
+	let y = x == false;
+	if (x <= true) {
+		return x != true;
 	}
 	else {
-		return false;
+		return x >= y || x && x;
 	}
 	`
 	tests := []struct {
@@ -95,23 +95,34 @@ func TestNextToken(t *testing.T) {
 		{token.LET, "let"},
 		{token.IDENT, "y"},
 		{token.ASSIGN, "="},
-		{token.BANG, "!"},
 		{token.IDENT, "x"},
+		{token.EQ, "=="},
+		{token.FALSE, "false"},
 		{token.SEMICOLON, ";"},
 
 		{token.IF, "if"},
 		{token.LPAREN, "("},
 		{token.IDENT, "x"},
+		{token.LTE, "<="},
+		{token.TRUE, "true"},
 		{token.RPAREN, ")"},
 		{token.LBRACE, "{"},
 		{token.RETURN, "return"},
+		{token.IDENT, "x"},
+		{token.NE, "!="},
 		{token.TRUE, "true"},
 		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
 		{token.ELSE, "else"},
 		{token.LBRACE, "{"},
 		{token.RETURN, "return"},
-		{token.FALSE, "false"},
+		{token.IDENT, "x"},
+		{token.GTE, ">="},
+		{token.IDENT, "y"},
+		{token.OR, "||"},
+		{token.IDENT, "x"},
+		{token.AND, "&&"},
+		{token.IDENT, "x"},
 		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
 		{token.EOF, ""},
