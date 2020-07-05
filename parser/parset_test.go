@@ -46,6 +46,25 @@ func testStatement(t *testing.T, s ast.Statement, name string) {
 	assert.Equal(t, name, letStmt.Name.TokenLiteral(), "expected let stmt token ident to be %s, got %s", name, letStmt.Name.TokenLiteral())
 }
 
+func TestReturnStatements(t *testing.T) {
+	input := `
+return 5;
+return 10;
+return 993322;
+`
+	l := lexer.New(input)
+	p := New(l)
+
+	program := p.ParseProgram()
+	checkParseErrors(t, p)
+	assert.NotNil(t, program, "ParseProgram() returned nil")
+	assert.Equal(t, 3, len(program.Statements), "Expected 3 statements, got %d", len(program.Statements))
+
+	for _, stmt := range program.Statements {
+		assert.IsType(t, &ast.ReturnStatement{}, stmt, "expected type *ast.ReturnStatement but got %T", stmt)
+	}
+}
+
 func checkParseErrors(t *testing.T, p *Parser) {
 	errors := p.errors
 	if assert.Equal(t, 0, len(errors), "encountered %d parser errors", len(errors)) {
